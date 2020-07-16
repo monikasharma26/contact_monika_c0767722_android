@@ -39,17 +39,16 @@
                 android:paddingLeft="17dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="16sp"  />
+                android:textSize="16sp" />
 
             <!-- ICON -->
             <ImageView
                 android:id="@+id/conicon"
-                android:layout_width="14.7dp"
-                android:layout_height="10.3dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="17dp"
-                android:src="@drawable/email" />
+                app:srcCompat="@drawable/search" />
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView

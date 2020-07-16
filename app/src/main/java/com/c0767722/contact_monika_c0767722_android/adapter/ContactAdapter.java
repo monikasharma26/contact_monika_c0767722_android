@@ -81,6 +81,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         });
     }
 
+    public void serachResult(List<Contact> sList) {
+        contactList =  sList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return contactList.size();

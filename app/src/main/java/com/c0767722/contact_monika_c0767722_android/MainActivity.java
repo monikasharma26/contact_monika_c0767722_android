@@ -2,6 +2,8 @@ package com.c0767722.contact_monika_c0767722_android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import com.c0767722.contact_monika_c0767722_android.database.UserDb;
 import com.c0767722.contact_monika_c0767722_android.model.Contact;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-        final UserDb userDb = UserDb.getInstance( this );
+        final UserDb userDb = UserDb.getInstance(this);
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle("List Of Contacts");
@@ -81,6 +84,41 @@ public class MainActivity extends AppCompatActivity {
         rvlistCustomers.setLayoutManager(linearLayoutManager);
 
         contactAdapter.notifyDataSetChanged();
+
+        txtEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                search(s.toString());
+            }
+        });
+
+    }
+
+    private void search(String data) {
+        List<Contact> searchList = new ArrayList<>();
+        for (Contact contact : contactList) {
+            if (contact.getFirstName().toLowerCase().contains(data.toLowerCase())
+                    || contact.getLastName().toLowerCase().contains(data.toLowerCase())
+                    || contact.getEmail().toLowerCase().contains(data.toLowerCase())
+                    || contact.getPhone().toLowerCase().contains(data.toLowerCase())
+                    || contact.getAddress().toLowerCase().contains(data.toLowerCase())
+
+            ) {
+                searchList.add(contact);
+            }
+        }
+        contactAdapter.serachResult(searchList);
+
 
     }
 }
