@@ -1,12 +1,19 @@
 package com.c0767722.contact_monika_c0767722_android;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.c0767722.contact_monika_c0767722_android.database.UserDb;
@@ -106,17 +113,86 @@ public class AddUserActivity extends AppCompatActivity {
                     contactEdit.setAddress(address);
                     contactEdit.setPhone(phone);
                     userDb.daoObject().updateUser(contactEdit);
-                }
-                else{
-                Contact contact = new Contact(fName,lName,email,address,phone);
+                    showAlert("Contact Updated SuccessFully");
 
-                userDb.daoObject().insertUser(contact);
                 }
+                else {
+                    if (validation()) {
+                        Contact contact = new Contact(fName, lName, email, address, phone);
+                        userDb.daoObject().insertUser(contact);
+                        showAlert("Added SuccessFully");
 
+                    }
+                }
+                hideKeyboard(AddUserActivity.this);
+
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });
     }
+    private void showAlert(String message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Alert!");
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setIcon(R.drawable.ic_action_alerts);
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
+    private boolean validation() {
+        if (txtFname.getText().toString().trim().length() == 0) {
+            txtFname.setError("Please enter First Name");
+            txtFname.requestFocus();
+            return false;
+        } else if (txtLname.getText().toString().trim().length() == 0) {
+            txtLname.setError("Please Enter Last name");
+            txtLname.requestFocus();
+            return false;
+        } else if (txtEmail.getText().toString().trim().length() == 0) {
+            txtEmail.setError("Please enter Email Address");
+            txtEmail.requestFocus();
+            return false;
+        } else if (!isValidEmail(txtEmail.getText().toString())) {
+            txtEmail.setError("Please enter Valid Email");
+            txtEmail.requestFocus();
+            return false;
+        }  else if (txtPhoneNumber.getText().toString().trim().length() == 0) {
+            txtEmail.setError("Please enter Phone Number");
+            txtAddress.requestFocus();
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 
 
 }

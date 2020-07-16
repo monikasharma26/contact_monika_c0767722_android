@@ -182,6 +182,7 @@ app:layout_constraintVertical_bias="1.0">
                     android:background="@android:color/transparent"
                     android:hint="Phone Number"
                     android:inputType="number"
+                    android:maxLength="10"
                     android:maxLines="1"
                     android:paddingLeft="17dp"
                     android:paddingTop="15dp"
