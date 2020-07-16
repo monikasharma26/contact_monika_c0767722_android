@@ -2,6 +2,8 @@ package com.c0767722.contact_monika_c0767722_android.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.c0767722.contact_monika_c0767722_android.AddUserActivity;
 import com.c0767722.contact_monika_c0767722_android.R;
 import com.c0767722.contact_monika_c0767722_android.model.Contact;
 
@@ -57,6 +60,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.email.setText(contact.getEmail());
         holder.phoneNo.setText(contact.getPhone());
         holder.address.setText(contact.getAddress());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AddUserActivity.class);
+                intent.putExtra("contactData",contact);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

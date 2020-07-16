@@ -53,38 +53,70 @@ public class AddUserActivity extends AppCompatActivity {
     @InjectView(R.id.btnCancel)
     MaterialButton btnCancel;
     ActionBar actionBar;
-    String fName, lName, email, address, phone;
+    Contact contactEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adduser);
         ButterKnife.inject(this);
+        contactEdit = getIntent().getParcelableExtra("contactData");
+
+
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle("Add Contact");
+        if(contactEdit != null)
+        {
+            actionBar.setTitle("Edit Contact");
+        }
+        else{
+            actionBar.setTitle("Add Contact");
+        }
+
         actionBar.show();
+
+        if(contactEdit != null)
+        {
+            txtFname.setText(contactEdit.getFirstName());
+            txtLname.setText(contactEdit.getLastName());
+            txtEmail.setText(contactEdit.getEmail());
+            txtPhoneNumber.setText(contactEdit.getPhone());
+            txtAddress.setText(contactEdit.getAddress());
+
+        }
 
         btnssave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchUserDetails();
+
+                String fName = txtFname.getText().toString();
+                String  lName = txtLname.getText().toString();
+                String  email = txtEmail.getText().toString();
+                String   address = txtAddress.getText().toString();
+                String   phone = txtPhoneNumber.getText().toString();
+
                 //Object for room Database;
                 UserDb userDb = UserDb.getInstance(v.getContext());
 
+                if(contactEdit != null)
+                {
+                    contactEdit.setFirstName(fName);
+                    contactEdit.setLastName(lName);
+                    contactEdit.setEmail(email);
+                    contactEdit.setAddress(address);
+                    contactEdit.setPhone(phone);
+                    userDb.daoObject().updateUser(contactEdit);
+                }
+                else{
                 Contact contact = new Contact(fName,lName,email,address,phone);
 
                 userDb.daoObject().insertUser(contact);
+                }
+
                 finish();
             }
         });
     }
 
-    private void fetchUserDetails() {
-        fName = txtFname.getText().toString();
-        lName = txtLname.getText().toString();
-        email = txtEmail.getText().toString();
-        address = txtAddress.getText().toString();
-        phone = txtPhoneNumber.getText().toString();
-    }
+
 }
