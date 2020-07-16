@@ -3,6 +3,7 @@ package com.c0767722.contact_monika_c0767722_android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -52,8 +54,10 @@ public class MainActivity extends AppCompatActivity {
         final UserDb userDb = UserDb.getInstance(this);
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle("List Of Contacts");
+      //  actionBar.setTitle("List Of Contacts");
         actionBar.show();
+
+
         //Add Customer Button Clicked
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         });
         contactAdapter = new ContactAdapter(this);
 
-        contactList = userDb.daoObject().getDefault();
+        contactList = userDb.daoObject().getAllContact();
 
-        userDb.daoObject().getUserDetails().observe(this,
+        userDb.daoObject().getContactDetails().observe(this,
                 new Observer<List<Contact>>() {
                     @Override
                     public void onChanged(List<Contact> contacts) {
@@ -101,6 +105,23 @@ public class MainActivity extends AppCompatActivity {
                 search(s.toString());
             }
         });
+
+        final Integer[] countContact = {
+          userDb.daoObject().countNoOfContacts()
+        };
+
+        userDb.daoObject().countUpdatedContacts().observe( this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer countContacts) {
+                countContact[0] = countContacts;
+                actionBar.setTitle("List Of Contacts");
+                if(countContact[0] !=0) {
+                    actionBar.setSubtitle((Html.fromHtml("<h4><font color='#FF9900' >    Total Number Of Contacts are:     " + countContacts.toString()+ "</h4></font>")));
+
+                }
+
+            }
+        } );
 
     }
 

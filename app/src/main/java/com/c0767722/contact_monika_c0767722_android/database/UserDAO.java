@@ -26,14 +26,14 @@ public interface UserDAO {
     void updateUser(Contact person);
 
     @Query("Select count(id) from contact")
-    Integer countNoOfUsers();
+    Integer countNoOfContacts();
 
     @Query("Select count(id) from contact")
-    LiveData<Integer> countUpdatedUser();
+    LiveData<Integer> countUpdatedContacts();
 
     @Query("Select * from contact")
-    LiveData<List<Contact>> getUserDetails();
+    LiveData<List<Contact>> getContactDetails();
 
     @Query("Select * from contact")
-    List<Contact> getDefault();
+    List<Contact> getAllContact();
 }
