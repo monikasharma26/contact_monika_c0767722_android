@@ -1,12 +1,16 @@
 package com.c0767722.contact_monika_c0767722_android;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.c0767722.contact_monika_c0767722_android.database.UserDb;
+import com.c0767722.contact_monika_c0767722_android.model.Contact;
 import com.google.android.material.button.MaterialButton;
 
 import butterknife.ButterKnife;
@@ -48,11 +52,39 @@ public class AddUserActivity extends AppCompatActivity {
     MaterialButton btnssave;
     @InjectView(R.id.btnCancel)
     MaterialButton btnCancel;
+    ActionBar actionBar;
+    String fName, lName, email, address, phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adduser);
         ButterKnife.inject(this);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle("Add Contact");
+        actionBar.show();
+
+        btnssave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fetchUserDetails();
+                //Object for room Database;
+                UserDb userDb = UserDb.getInstance(v.getContext());
+
+                Contact contact = new Contact(fName,lName,email,address,phone);
+
+                userDb.daoObject().insertUser(contact);
+                finish();
+            }
+        });
+    }
+
+    private void fetchUserDetails() {
+        fName = txtFname.getText().toString();
+        lName = txtLname.getText().toString();
+        email = txtEmail.getText().toString();
+        address = txtAddress.getText().toString();
+        phone = txtPhoneNumber.getText().toString();
     }
 }

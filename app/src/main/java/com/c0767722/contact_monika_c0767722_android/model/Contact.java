@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "user")
-public class User implements Parcelable {
+@Entity(tableName = "contact")
+public class Contact implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
@@ -29,7 +29,7 @@ public class User implements Parcelable {
     @SerializedName("email")
     @Expose
     private String email;
-    
+
     @SerializedName("address")
     @Expose
     private String address;
@@ -38,7 +38,7 @@ public class User implements Parcelable {
     @Expose
     private String phone;
 
-    public User(String firstName, String lastName, String email, String address, String phone) {
+    public Contact(String firstName, String lastName, String email, String address, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -46,15 +46,15 @@ public class User implements Parcelable {
         this.phone = phone;
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
+    public static final Creator<Contact> CREATOR = new Creator<Contact>() {
         @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
+        public Contact createFromParcel(Parcel in) {
+            return new Contact(in);
         }
 
         @Override
-        public User[] newArray(int size) {
-            return new User[size];
+        public Contact[] newArray(int size) {
+            return new Contact[size];
         }
     };
 
@@ -111,7 +111,7 @@ public class User implements Parcelable {
         return 0;
     }
 
-    protected User(Parcel in) {
+    protected Contact(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {
