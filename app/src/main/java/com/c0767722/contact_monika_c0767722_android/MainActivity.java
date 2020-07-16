@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         final UserDb userDb = UserDb.getInstance(this);
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-      //  actionBar.setTitle("List Of Contacts");
+        //  actionBar.setTitle("List Of Contacts");
         actionBar.show();
 
 
@@ -107,25 +107,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final Integer[] countContact = {
-          userDb.daoObject().countNoOfContacts()
+                userDb.daoObject().countNoOfContacts()
         };
 
-        userDb.daoObject().countUpdatedContacts().observe( this, new Observer<Integer>() {
+        userDb.daoObject().countUpdatedContacts().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer countContacts) {
                 countContact[0] = countContacts;
                 actionBar.setTitle("List Of Contacts");
-                if(countContact[0] !=0) {
-                    actionBar.setSubtitle((Html.fromHtml("<h4><font color='#FF9900' >    Total Number Of Contacts are:     " + countContacts.toString()+ "</h4></font>")));
+                if (countContact[0] != 0) {
+                    actionBar.setSubtitle((Html.fromHtml("<h4><font color='#FF9900' >    Total Number Of Contacts are:     " + countContacts.toString() + "</h4></font>")));
 
-                }
-                else
-                {
+                } else {
                     actionBar.setSubtitle((Html.fromHtml("<h4><font color='#FF9900' >    Total Number Of Contacts are: 0 </h4></font>")));
                 }
 
             }
-        } );
+        });
 
     }
 

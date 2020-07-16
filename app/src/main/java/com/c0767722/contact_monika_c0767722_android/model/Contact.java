@@ -123,15 +123,16 @@ public class Contact implements Parcelable {
         address = in.readString();
         phone = in.readString();
     }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (id == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeInt( id );
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
         }
-        dest.writeString(firstName );
+        dest.writeString(firstName);
         dest.writeString(lastName);
         dest.writeString(email);
         dest.writeString(address);

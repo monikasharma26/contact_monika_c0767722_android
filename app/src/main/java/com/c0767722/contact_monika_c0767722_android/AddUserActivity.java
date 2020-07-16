@@ -71,22 +71,17 @@ public class AddUserActivity extends AppCompatActivity {
         contactEdit = getIntent().getParcelableExtra("contactData");
 
 
-
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        if(contactEdit != null)
-        {
+        if (contactEdit != null) {
             actionBar.setTitle("Edit Contact");
-            Log.d("ddd","qwer"+contactEdit.getEmail());
-        }
-        else{
+        } else {
             actionBar.setTitle("Add Contact");
         }
 
         actionBar.show();
 
-        if(contactEdit != null)
-        {
+        if (contactEdit != null) {
             txtFname.setText(contactEdit.getFirstName());
             txtLname.setText(contactEdit.getLastName());
             txtEmail.setText(contactEdit.getEmail());
@@ -100,16 +95,15 @@ public class AddUserActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String fName = txtFname.getText().toString();
-                String  lName = txtLname.getText().toString();
-                String  email = txtEmail.getText().toString();
-                String   address = txtAddress.getText().toString();
-                String   phone = txtPhoneNumber.getText().toString();
+                String lName = txtLname.getText().toString();
+                String email = txtEmail.getText().toString();
+                String address = txtAddress.getText().toString();
+                String phone = txtPhoneNumber.getText().toString();
 
                 //Object for room Database;
                 UserDb userDb = UserDb.getInstance(v.getContext());
 
-                if(contactEdit != null)
-                {
+                if (contactEdit != null) {
                     contactEdit.setFirstName(fName);
                     contactEdit.setLastName(lName);
                     contactEdit.setEmail(email);
@@ -118,8 +112,7 @@ public class AddUserActivity extends AppCompatActivity {
                     userDb.daoObject().updateUser(contactEdit);
                     showAlert("Contact Updated SuccessFully");
 
-                }
-                else {
+                } else {
                     if (validation()) {
                         Contact contact = new Contact(fName, lName, email, address, phone);
                         userDb.daoObject().insertUser(contact);
@@ -139,6 +132,7 @@ public class AddUserActivity extends AppCompatActivity {
             }
         });
     }
+
     private void showAlert(String message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Alert!");
@@ -154,6 +148,7 @@ public class AddUserActivity extends AppCompatActivity {
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
+
     private boolean validation() {
         if (txtFname.getText().toString().trim().length() == 0) {
             txtFname.setError("Please enter First Name");
@@ -171,12 +166,11 @@ public class AddUserActivity extends AppCompatActivity {
             txtEmail.setError("Please enter Valid Email");
             txtEmail.requestFocus();
             return false;
-        }  else if (txtPhoneNumber.getText().toString().trim().length() == 0) {
+        } else if (txtPhoneNumber.getText().toString().trim().length() == 0) {
             txtEmail.setError("Please enter Phone Number");
             txtAddress.requestFocus();
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -193,7 +187,6 @@ public class AddUserActivity extends AppCompatActivity {
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
 
 
 }

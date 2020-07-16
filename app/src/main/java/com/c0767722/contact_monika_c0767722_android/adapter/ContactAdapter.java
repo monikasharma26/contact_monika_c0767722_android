@@ -35,6 +35,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void setContactList(List<Contact> personsList) {
         this.contactList = personsList;
     }
+
     public List<Contact> getContactList() {
         return contactList;
     }
@@ -50,17 +51,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_customerlist,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_customerlist, parent, false);
         return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final  Contact contact = contactList.get(position);
+        final Contact contact = contactList.get(position);
         holder.personImg.setImageResource(R.drawable.emp);
         holder.deleteContact.setImageResource(R.drawable.del);
-        holder.fullname.setText(contact.getFirstName() + " " +contact.getLastName());
+        holder.fullname.setText(contact.getFirstName() + " " + contact.getLastName());
         holder.email.setText(contact.getEmail());
         holder.phoneNo.setText(contact.getPhone());
         holder.address.setText(contact.getAddress());
@@ -69,7 +70,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AddUserActivity.class);
-                intent.putExtra("contactData",contact);
+                intent.putExtra("contactData", contact);
                 context.startActivity(intent);
             }
         });
@@ -82,7 +83,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     }
 
     public void serachResult(List<Contact> sList) {
-        contactList =  sList;
+        contactList = sList;
         notifyDataSetChanged();
     }
 
@@ -92,8 +93,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView fullname,email,phoneNo,address;
-        ImageView deleteContact,personImg;
+        TextView fullname, email, phoneNo, address;
+        ImageView deleteContact, personImg;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             fullname = itemView.findViewById(R.id.txtName);
@@ -103,8 +105,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             address = itemView.findViewById(R.id.txtAdd);
             deleteContact = itemView.findViewById(R.id.imgDel);
             personImg = itemView.findViewById(R.id.imgAttraction);
-
-
 
 
         }
@@ -120,6 +120,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         notifyDataSetChanged();
 
     }
+
     public void showDialogForDelete(final int pos) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Are you Sure to Delete this contact");
@@ -128,7 +129,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-               deleteContact(pos);
+                deleteContact(pos);
 
 
             }

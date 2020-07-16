@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 
 import com.c0767722.contact_monika_c0767722_android.model.Contact;
 
-@Database(entities = Contact.class,version = 1,exportSchema = false)
+@Database(entities = Contact.class, version = 1, exportSchema = false)
 public abstract class UserDb extends RoomDatabase {
 
     public static final String DB_NAME = "db_user";
@@ -17,10 +17,8 @@ public abstract class UserDb extends RoomDatabase {
     private static UserDb uInstance;
 
 
-    public static UserDb getInstance(Context context)
-    {
-        if(uInstance == null)
-        {
+    public static UserDb getInstance(Context context) {
+        if (uInstance == null) {
             uInstance = Room.databaseBuilder(context.getApplicationContext(), UserDb.class, UserDb.DB_NAME).allowMainThreadQueries().fallbackToDestructiveMigration().build();
         }
         return uInstance;
