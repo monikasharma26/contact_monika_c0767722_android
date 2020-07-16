@@ -69,7 +69,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AddUserActivity.class);
-                intent.putExtra("contactData",position);
+                intent.putExtra("contactData",contact);
                 context.startActivity(intent);
             }
         });

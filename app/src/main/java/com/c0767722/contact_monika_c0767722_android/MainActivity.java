@@ -119,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
                     actionBar.setSubtitle((Html.fromHtml("<h4><font color='#FF9900' >    Total Number Of Contacts are:     " + countContacts.toString()+ "</h4></font>")));
 
                 }
+                else
+                {
+                    actionBar.setSubtitle((Html.fromHtml("<h4><font color='#FF9900' >    Total Number Of Contacts are: 0 </h4></font>")));
+                }
 
             }
         } );

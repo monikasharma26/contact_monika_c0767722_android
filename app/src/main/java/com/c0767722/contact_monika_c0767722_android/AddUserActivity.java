@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -70,11 +71,13 @@ public class AddUserActivity extends AppCompatActivity {
         contactEdit = getIntent().getParcelableExtra("contactData");
 
 
+
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         if(contactEdit != null)
         {
             actionBar.setTitle("Edit Contact");
+            Log.d("ddd","qwer"+contactEdit.getEmail());
         }
         else{
             actionBar.setTitle("Add Contact");
@@ -120,7 +123,7 @@ public class AddUserActivity extends AppCompatActivity {
                     if (validation()) {
                         Contact contact = new Contact(fName, lName, email, address, phone);
                         userDb.daoObject().insertUser(contact);
-                        showAlert("Added SuccessFully");
+                        showAlert("Contact Added SuccessFully");
 
                     }
                 }
@@ -184,9 +187,7 @@ public class AddUserActivity extends AppCompatActivity {
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
         if (view == null) {
             view = new View(activity);
         }
