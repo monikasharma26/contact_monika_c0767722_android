@@ -51,6 +51,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final  Contact contact = contactList.get(position);
+        holder.personImg.setImageResource(R.drawable.emp);
+        holder.deleteContact.setImageResource(R.drawable.del);
         holder.fullname.setText(contact.getFirstName() + " " +contact.getLastName());
         holder.email.setText(contact.getEmail());
         holder.phoneNo.setText(contact.getPhone());
@@ -64,7 +66,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView fullname,email,phoneNo,address;
-        ImageView deleteContact;
+        ImageView deleteContact,personImg;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             fullname = itemView.findViewById(R.id.txtName);
@@ -73,6 +75,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             phoneNo = itemView.findViewById(R.id.txtPhone);
             address = itemView.findViewById(R.id.txtAdd);
             deleteContact = itemView.findViewById(R.id.imgDel);
+            personImg = itemView.findViewById(R.id.imgAttraction);
 
 
 
